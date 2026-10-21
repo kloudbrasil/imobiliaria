@@ -412,12 +412,8 @@ body {
     label.textContent = 'Entrando…';
 
     setTimeout(function () {
-      btn.classList.remove('is-loading');
-      btn.disabled = false;
-      btn.removeAttribute('aria-busy');
-      label.textContent = 'Entrar';
-      showAlert('Layout de demonstração: conecte este formulário à autenticação do Hunter.', 'info');
-    }, 1200);
+      location.href = 'carregando.html?u=' + encodeURIComponent(email.value.trim());
+    }, 800);
   });
 })();
 </script>
