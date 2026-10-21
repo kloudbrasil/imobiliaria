@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#111D3B">
+<title>Entrar · Hunter by Kloud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&display=swap">
+<style>
+/* Layout: duas colunas. À esquerda, painel institucional em marinho com a marca e
+   a proposta do produto; à direita, formulário de login sobre fundo claro.
+   Em telas estreitas o painel institucional vira uma faixa compacta no topo. */
+:root {
+  /* Cores institucionais (Manual de Identidade Visual Kloud) */
+  --navy: #111D3B;        /* Azul 130 */
+  --royal: #0236AB;       /* Azul 70 */
+  --sky: #81C2FF;         /* Azul-claro, o ponto da marca */
+  --offwhite: #F3F8F8;    /* Quase branco */
+  --ink: #0A1229;
+
+  /* Superfície do formulário (tema claro) */
+  --bg: #FFFFFF;
+  --surface: #F6F8FB;
+  --text: #111D3B;
+  --text-muted: #55617A;
+  --border: #D7DDE7;
+  --border-strong: #AEB8C8;
+  --focus: rgba(2, 54, 171, 0.18);
+  --primary: var(--royal);
+  --primary-hover: #022C8C;
+  --primary-text: #FFFFFF;
+  --link: var(--royal);
+  --danger: #B42318;
+  --danger-bg: #FEF3F2;
+  --success: #067647;
+
+  --font-display: "Magistral", "Archivo", system-ui, sans-serif;
+  --font-body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1328;
+    --surface: #111B35;
+    --text: #F3F8F8;
+    --text-muted: #A3AEC4;
+    --border: #26324F;
+    --border-strong: #3C4A6B;
+    --focus: rgba(129, 194, 255, 0.25);
+    --primary: #2F63E0;
+    --primary-hover: #4A78EA;
+    --link: var(--sky);
+    --danger: #FDA29B;
+    --danger-bg: rgba(180, 35, 24, 0.14);
+    --success: #75E0A7;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1328;
+  --surface: #111B35;
+  --text: #F3F8F8;
+  --text-muted: #A3AEC4;
+  --border: #26324F;
+  --border-strong: #3C4A6B;
+  --focus: rgba(129, 194, 255, 0.25);
+  --primary: #2F63E0;
+  --primary-hover: #4A78EA;
+  --link: var(--sky);
+  --danger: #FDA29B;
+  --danger-bg: rgba(180, 35, 24, 0.14);
+  --success: #75E0A7;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.layout { min-height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+
+/* ---------- PAINEL INSTITUCIONAL ---------- */
+.aside {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 48px;
+  padding: clamp(32px, 5vw, 64px);
+  background:
+    radial-gradient(90% 60% at 0% 0%, rgba(2, 54, 171, 0.55), transparent 70%),
+    radial-gradient(70% 50% at 100% 100%, rgba(129, 194, 255, 0.14), transparent 70%),
+    var(--navy);
+  color: var(--offwhite);
+}
+/* Monograma "k." como marca d'água */
+.aside .watermark {
+  position: absolute; z-index: -1; right: -14%; bottom: -10%; width: 92%; max-width: 760px; height: auto;
+  opacity: 0.07; pointer-events: none;
+}
+/* Linha fina de grade, discreta */
+.aside::before {
+  content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(243, 248, 248, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 248, 248, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: linear-gradient(160deg, #000 10%, transparent 75%);
+          mask-image: linear-gradient(160deg, #000 10%, transparent 75%);
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand-logo { height: 24px; width: auto; display: block; }
+.brand-sep { width: 1px; height: 22px; background: rgba(243, 248, 248, 0.28); }
+.brand-product { font-family: var(--font-display); font-stretch: 125%; font-weight: 700; font-size: 14px; letter-spacing: 0.2em; }
+
+.pitch { max-width: 30rem; display: flex; flex-direction: column; gap: 20px; }
+.pitch-kicker { margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky); }
+.pitch-kicker::before { content: ""; width: 10px; height: 7px; border-radius: 2px; background: var(--sky); }
+.pitch h1 { margin: 0; font-family: var(--font-display); font-stretch: 112%; font-weight: 650; font-size: clamp(30px, 3.2vw, 44px); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
+.pitch p { margin: 0; font-size: 17px; color: rgba(243, 248, 248, 0.74); }
+.features { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 14px; }
+.features li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; font-size: 15px; color: rgba(243, 248, 248, 0.86); }
+.features svg { width: 20px; height: 20px; margin-top: 2px; color: var(--sky); }
+
+.aside-foot { font-size: 13px; color: rgba(243, 248, 248, 0.56); }
+
+/* ---------- FORMULÁRIO ---------- */
+.content { display: flex; flex-direction: column; padding: clamp(24px, 4vw, 48px) max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); }
+.content-inner { flex: 1; display: flex; align-items: center; justify-content: center; }
+.card { width: 100%; max-width: 400px; }
+.card-head { margin-bottom: 32px; }
+.card-head h2 { margin: 0 0 8px; font-family: var(--font-display); font-stretch: 108%; font-weight: 650; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; }
+.card-head p { margin: 0; color: var(--text-muted); font-size: 15px; }
+
+.alert { display: none; gap: 10px; align-items: flex-start; margin-bottom: 20px; padding: 12px 14px; border-radius: var(--radius); font-size: 14px; border: 1px solid; }
+.alert svg { flex: none; width: 18px; height: 18px; margin-top: 1px; }
+.alert.is-visible { display: flex; }
+.alert--error { color: var(--danger); background: var(--danger-bg); border-color: color-mix(in srgb, var(--danger) 30%, transparent); }
+.alert--info { color: var(--text); background: var(--surface); border-color: var(--border); }
+
+.form { display: flex; flex-direction: column; gap: 20px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.field label { font-size: 14px; font-weight: 600; color: var(--text); }
+.control { position: relative; }
+.control input {
+  width: 100%; height: 46px; padding: 0 14px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--bg); color: var(--text);
+  font: 400 16px/1 var(--font-body); outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.control input::placeholder { color: color-mix(in srgb, var(--text-muted) 70%, transparent); }
+.control input:hover { border-color: var(--border-strong); }
+.control input:focus-visible { border-color: var(--primary); box-shadow: 0 0 0 4px var(--focus); }
+.control input[aria-invalid="true"] { border-color: var(--danger); }
+.control input[aria-invalid="true"]:focus-visible { box-shadow: 0 0 0 4px color-mix(in srgb, var(--danger) 18%, transparent); }
+.control--password input { padding-right: 52px; }
+.peek { position: absolute; top: 1px; right: 1px; bottom: 1px; width: 46px; border: 0; border-radius: 0 var(--radius) var(--radius) 0; background: transparent; color: var(--text-muted); cursor: pointer; display: grid; place-items: center; }
+.peek:hover { color: var(--text); }
+.peek:focus-visible { outline: 2px solid var(--primary); outline-offset: -4px; border-radius: 8px; }
+.peek svg { width: 20px; height: 20px; }
+.peek .eye-off { display: none; }
+.peek[aria-pressed="true"] .eye { display: none; }
+.peek[aria-pressed="true"] .eye-off { display: block; }
+.hint { margin: 0; font-size: 13px; color: var(--text-muted); }
+.hint--error { color: var(--danger); }
+.hint[hidden] { display: none; }
+
+.link { color: var(--link); font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 4px; }
+.link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.link:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.check { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text); cursor: pointer; min-height: 24px; align-self: flex-start; }
+.check input { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); cursor: pointer; }
+.check input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.submit {
+  position: relative; height: 48px; margin-top: 4px; border: 0; border-radius: var(--radius); cursor: pointer;
+  background: var(--primary); color: var(--primary-text);
+  font: 600 16px/1 var(--font-body); letter-spacing: 0.01em;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 1px 2px rgba(17, 29, 59, 0.12);
+  transition: background-color .15s, box-shadow .15s;
+}
+.submit:hover { background: var(--primary-hover); }
+.submit:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--focus); }
+.submit:disabled { cursor: progress; opacity: 0.85; }
+.spinner { display: none; width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.35); border-top-color: #FFFFFF; animation: spin 0.8s linear infinite; }
+.submit.is-loading .spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.secure { margin-top: 28px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: var(--text-muted); text-align: center; }
+.secure svg { width: 16px; height: 16px; flex: none; }
+
+.content-foot { display: flex; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; padding-top: 24px; font-size: 13px; color: var(--text-muted); }
+.content-foot a { color: inherit; text-decoration: none; }
+.content-foot a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+.content-foot nav { display: flex; gap: 16px; }
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .aside { gap: 20px; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }
+  .aside .watermark { width: 60%; right: -8%; bottom: -30%; }
+  .pitch { gap: 10px; }
+  .pitch h1 { font-size: 24px; }
+  .pitch p, .features, .aside-foot { display: none; }
+  .content-inner { align-items: flex-start; padding-top: 16px; }
+}
+@media (max-width: 480px) {
+  .brand-logo { height: 20px; }
+  .brand-sep { height: 18px; }
+  .brand-product { font-size: 12px; }
+  .card-head h2 { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="aside" aria-label="Sobre o Hunter">
+    <!-- Monograma "k." vetorizado a partir dos arquivos da marca -->
+    <svg class="watermark" viewBox="0 0 1000 625.7" aria-hidden="true" focusable="false">
+      <path fill="#F3F8F8" d="M2.0 5.4 L0.0 11.9 L0.0 613.8 L2.0 620.2 L5.4 623.7 L10.9 625.7 L129.9 625.7 L135.8 623.7 L138.8 620.7 L140.7 616.3 L140.7 433.6 L143.2 427.7 L147.2 424.2 L151.1 422.7 L313.6 422.7 L333.8 426.2 L352.1 433.6 L369.9 445.9 L538.3 615.8 L548.6 622.2 L557.0 624.2 L706.2 624.2 L709.6 623.2 L714.6 618.8 L716.0 614.8 L716.0 609.9 L714.1 605.4 L485.9 375.3 L483.5 368.9 L485.4 361.5 L489.9 357.0 L698.8 189.1 L702.7 185.2 L704.2 181.7 L704.2 175.3 L699.8 168.9 L694.8 166.9 L634.6 166.9 L622.2 170.9 L502.2 267.2 L471.1 289.9 L441.5 308.6 L415.8 323.0 L389.6 335.8 L359.5 348.6 L304.7 366.9 L255.3 378.3 L204.9 385.2 L173.8 387.2 L150.1 387.2 L146.2 385.2 L142.7 381.7 L140.7 376.3 L140.7 9.4 L139.8 6.4 L135.8 2.0 L129.9 0.0 L10.9 0.0 L5.4 2.0Z"/>
+      <path fill="#81C2FF" d="M861.2 535.3 L859.3 541.2 L859.3 603.0 L863.2 612.3 L871.6 619.8 L878.5 622.7 L886.9 624.2 L972.3 624.2 L980.2 622.7 L988.1 619.3 L997.0 610.4 L1000.0 601.0 L1000.0 543.7 L996.5 533.3 L988.6 525.4 L982.7 522.5 L974.8 520.5 L884.0 520.5 L876.5 522.5 L869.6 525.9 L863.7 531.4Z"/>
+    </svg>
+
+    <div class="brand">
+      <svg class="brand-logo" viewBox="0 0 1000 146.8" role="img" aria-label="Kloud">
+        <path fill="#F3F8F8" fill-rule="evenodd" d="M511.8 40.8 L511.8 97.4 L514.3 110.8 L519.6 123.4 L525.6 132.1 L532.8 139.0 L541.9 144.0 L547.4 145.7 L552.4 146.4 L658.9 146.4 L663.1 145.9 L668.0 144.6 L673.4 142.2 L681.4 136.6 L688.5 128.6 L692.1 122.8 L695.0 116.7 L698.3 106.1 L699.7 95.2 L699.7 41.4 L699.2 40.1 L697.9 39.2 L670.7 39.0 L668.7 40.1 L668.2 41.4 L668.2 96.0 L666.9 104.3 L664.7 111.2 L659.1 121.6 L656.4 125.0 L650.4 130.6 L645.3 133.9 L639.9 136.2 L634.8 137.5 L629.4 138.1 L577.6 137.7 L569.1 135.3 L563.3 132.3 L559.9 129.7 L553.5 123.2 L549.5 117.2 L546.3 110.1 L543.9 101.4 L543.2 95.2 L542.8 40.3 L540.6 39.0 L514.3 39.0 L513.1 39.4ZM268.7 79.3 L267.2 90.3 L267.8 101.2 L269.2 108.5 L271.2 114.8 L275.8 124.5 L281.9 133.0 L285.7 136.8 L290.5 140.4 L298.4 144.4 L308.1 146.4 L437.8 146.4 L444.5 145.3 L450.1 143.3 L456.5 139.7 L459.7 137.2 L466.6 129.7 L471.7 121.6 L474.8 114.5 L477.0 107.2 L478.4 98.5 L478.6 89.3 L477.1 79.1 L474.1 69.1 L469.2 59.5 L463.5 52.1 L455.6 45.2 L448.1 41.4 L438.9 39.2 L309.9 39.0 L303.3 39.7 L296.8 41.7 L291.2 44.6 L286.3 48.3 L281.4 53.2 L276.5 59.9 L272.7 67.1ZM303.3 75.7 L308.1 66.0 L313.0 59.7 L320.9 53.0 L329.6 49.0 L338.0 47.5 L411.5 47.9 L420.2 50.4 L427.1 54.4 L433.6 60.4 L438.0 66.2 L442.3 74.9 L444.7 83.1 L445.6 90.3 L444.8 101.4 L443.4 107.4 L441.2 113.2 L435.2 123.2 L430.3 128.4 L426.0 131.9 L421.6 134.4 L416.0 136.6 L406.7 138.1 L339.3 138.1 L332.7 137.3 L325.8 135.2 L320.8 132.4 L316.6 129.4 L309.3 121.4 L304.6 113.0 L301.9 105.2 L300.4 96.5 L300.6 87.1ZM933.4 1.1 L931.8 0.0 L902.9 0.0 L901.1 1.3 L900.8 55.0 L900.2 56.1 L898.6 57.1 L896.2 56.6 L888.2 49.2 L878.3 43.4 L871.7 41.0 L861.9 39.2 L775.9 39.0 L765.8 40.6 L757.4 44.4 L753.1 47.5 L747.6 52.8 L742.6 59.7 L737.3 70.4 L734.0 82.4 L733.3 88.4 L733.3 97.2 L734.2 104.1 L737.5 115.6 L742.7 126.1 L748.7 133.9 L756.7 140.6 L764.0 144.2 L768.9 145.7 L773.9 146.4 L893.1 146.4 L898.2 145.7 L903.7 144.0 L910.4 140.6 L918.5 133.7 L925.3 124.6 L930.2 114.1 L933.2 102.0 L933.8 97.1ZM768.7 73.1 L773.8 64.0 L780.7 56.4 L786.5 52.2 L795.9 48.4 L801.7 47.5 L860.3 47.5 L867.4 48.6 L874.5 51.0 L883.9 56.6 L890.1 62.4 L895.3 69.8 L899.1 78.9 L900.6 86.2 L900.8 95.6 L899.5 104.1 L896.6 112.8 L893.7 118.5 L889.7 124.1 L881.9 131.3 L878.8 133.3 L871.7 136.4 L864.3 137.9 L801.2 137.9 L796.4 137.2 L791.2 135.5 L787.0 133.5 L781.0 129.4 L773.6 121.2 L769.2 113.6 L765.8 103.2 L764.7 94.9 L765.4 84.2ZM203.4 0.0 L201.6 1.1 L201.0 2.5 L201.0 143.9 L201.6 145.3 L203.2 146.4 L232.0 146.4 L232.9 146.0 L234.2 144.2 L234.2 2.2 L233.9 1.3 L232.0 0.0ZM0.4 1.3 L0.0 144.6 L1.3 146.4 L31.0 146.8 L32.7 145.7 L33.0 102.1 L33.6 100.5 L35.4 99.2 L74.0 99.2 L80.2 100.7 L86.9 104.9 L127.2 145.3 L129.9 146.4 L166.0 146.4 L167.5 145.5 L168.0 144.4 L167.6 142.1 L114.8 88.9 L113.4 86.4 L113.8 85.1 L164.0 44.4 L165.3 42.6 L165.3 41.4 L164.4 39.7 L163.3 39.2 L148.2 39.2 L145.7 40.1 L110.8 67.7 L97.6 75.7 L84.5 81.6 L73.5 85.4 L60.8 88.5 L47.9 90.3 L35.0 90.7 L33.4 89.3 L33.0 88.0 L33.0 1.8 L32.3 0.7 L30.8 0.0 L2.4 0.0Z"/>
+        <path fill="#81C2FF" d="M967.7 125.0 L967.0 126.8 L967.0 141.7 L967.9 143.7 L969.3 145.1 L972.6 146.4 L994.4 146.4 L997.6 145.1 L999.3 143.5 L1000.0 141.7 L1000.0 126.8 L998.9 124.5 L997.5 123.2 L994.7 122.1 L972.2 122.1 L969.5 123.2Z"/>
+      </svg>
+      <span class="brand-sep" aria-hidden="true"></span>
+      <span class="brand-product">HUNTER</span>
+    </div>
+
+    <div class="pitch">
+      <p class="pitch-kicker">Plataforma comercial</p>
+      <h1>A equipe comercial da Kloud, conectada em um só lugar.</h1>
+      <p>Acompanhe oportunidades, organize o funil e colabore com o time em tempo real.</p>
+      <ul class="features">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5L3 4Z"/></svg>
+          <span>Funil de vendas com visão unificada de cada oportunidade</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.2A6.5 6.5 0 0 1 21.5 20"/></svg>
+          <span>Colaboração do time em tempo real</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <span>Indicadores de desempenho sempre atualizados</span>
+        </li>
+      </ul>
+    </div>
+
+    <p class="aside-foot">Kloud Agência Digital · Conectando sua marca ao mundo</p>
+  </aside>
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="card">
+        <div class="card-head">
+          <h2 id="login-title">Entrar na sua conta</h2>
+          <p>Use seu e-mail corporativo Kloud para acessar o Hunter.</p>
+        </div>
+
+        <div class="alert" id="alert" role="alert" aria-live="assertive">
+          <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
+          <span id="alert-text"></span>
+        </div>
+
+        <form class="form" id="login" aria-labelledby="login-title" novalidate>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <div class="control">
+              <input id="email" name="email" type="email" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="nome@kloud.com.br" aria-describedby="email-error" required>
+            </div>
+            <p class="hint hint--error" id="email-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <div class="field-label">
+              <label for="password">Senha</label>
+              <a class="link" href="#" id="forgot">Esqueceu a senha?</a>
+            </div>
+            <div class="control control--password">
+              <input id="password" name="password" type="password" autocomplete="current-password" aria-describedby="password-error caps-hint" required>
+              <button class="peek" id="peek" type="button" aria-label="Mostrar senha" aria-pressed="false" aria-controls="password">
+                <svg class="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6A17.4 17.4 0 0 0 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>
+              </button>
+            </div>
+            <p class="hint hint--error" id="password-error" hidden></p>
+            <p class="hint" id="caps-hint" hidden>Caps Lock está ativado.</p>
+          </div>
+
+          <label class="check" for="remember">
+            <input id="remember" name="remember" type="checkbox">
+            Manter conectado neste dispositivo
+          </label>
+
+          <button class="submit" id="submit" type="submit">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="label">Entrar</span>
+          </button>
+        </form>
+
+        <p class="secure">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
+          Acesso restrito a colaboradores autorizados.
+        </p>
+      </div>
+    </div>
+
+    <footer class="content-foot">
+      <span>© 2026 Kloud Agência Digital</span>
+      <nav aria-label="Links institucionais">
+        <a href="#">Privacidade</a>
+        <a href="#">Suporte</a>
+      </nav>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('login');
+  var email = document.getElementById('email');
+  var pwd = document.getElementById('password');
+  var btn = document.getElementById('submit');
+  var label = btn.querySelector('.label');
+  var alertBox = document.getElementById('alert');
+  var alertText = document.getElementById('alert-text');
+
+  function showAlert(message, kind) {
+    alertBox.className = 'alert is-visible alert--' + (kind || 'error');
+    alertText.textContent = message;
+  }
+  function hideAlert() { alertBox.className = 'alert'; alertText.textContent = ''; }
+
+  function setFieldError(input, message) {
+    var hint = document.getElementById(input.id + '-error');
+    if (message) {
+      input.setAttribute('aria-invalid', 'true');
+      hint.textContent = message;
+      hint.hidden = false;
+    } else {
+      input.removeAttribute('aria-invalid');
+      hint.textContent = '';
+      hint.hidden = true;
+    }
+  }
+
+  // Limpa o erro do campo assim que o usuário corrige
+  [email, pwd].forEach(function (input) {
+    input.addEventListener('input', function () {
+      if (input.getAttribute('aria-invalid') === 'true') setFieldError(input, '');
+    });
+  });
+
+  // Mostrar/ocultar senha
+  var peek = document.getElementById('peek');
+  peek.addEventListener('click', function () {
+    var show = pwd.type === 'password';
+    pwd.type = show ? 'text' : 'password';
+    peek.setAttribute('aria-pressed', String(show));
+    peek.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
+    pwd.focus();
+  });
+
+  // Aviso de Caps Lock
+  var caps = document.getElementById('caps-hint');
+  function checkCaps(e) { if (e.getModifierState) caps.hidden = !e.getModifierState('CapsLock'); }
+  pwd.addEventListener('keydown', checkCaps);
+  pwd.addEventListener('keyup', checkCaps);
+  pwd.addEventListener('blur', function () { caps.hidden = true; });
+
+  // Recuperação de senha (conecte ao fluxo real do Hunter)
+  document.getElementById('forgot').addEventListener('click', function (e) {
+    e.preventDefault();
+    showAlert('Para redefinir sua senha, entre em contato com o administrador do Hunter.', 'info');
+  });
+
+  // Envio (layout de demonstração: conecte aqui a autenticação real do Hunter)
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    hideAlert();
+
+    var emailOk = email.value.trim() !== '' && email.checkValidity();
+    setFieldError(email, emailOk ? '' : (email.value.trim() ? 'Informe um e-mail válido.' : 'Informe seu e-mail.'));
+    setFieldError(pwd, pwd.value ? '' : 'Informe sua senha.');
+    if (!emailOk) { email.focus(); return; }
+    if (!pwd.value) { pwd.focus(); return; }
+
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    label.textContent = 'Entrando…';
+
+    setTimeout(function () {
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+      btn.removeAttribute('aria-busy');
+      label.textContent = 'Entrar';
+      showAlert('Layout de demonstração: conecte este formulário à autenticação do Hunter.', 'info');
+    }, 1200);
+  });
+})();
+</script>
+</body>
+</html>
